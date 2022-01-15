@@ -1,16 +1,19 @@
-import tweepy 
+
 import pandas as pd 
+import tweepy 
 from bs4 import BeautifulSoup
 import requests
 from datetime import datetime
+import yaml
 class api():
 
     def __init__(self):
-
-        self.access='QyXwPCcDSW0cAyvfMKXi6XwrB'
-        self.access_secret='UCHAfdf1NRuua3gpsBmZb631yGUbqkkPBptHjDm0Eryxw55gL2'
-        self.access_token = '705069617295790080-pozC0WzNnYW0CTJbOuCOfJ3O3cr6Maj'
-        self.access_token_secret = '19frJEBqOSFR05QGkfJWtznOuj3tqRh38zpVuDk92Jjr4'
+        with open('./secrets/auth.yaml', 'r') as f:
+            p = yaml.safe_load(f)
+        self.access=p['access']
+        self.access_secret=p['access_secret']
+        self.access_token = p['access_token']
+        self.access_token_secret = p['access_token_secret']
 
 
     def get_traffic(self):
@@ -34,6 +37,6 @@ class api():
             api = tweepy.API(oauth)
             now = datetime.now()
             current_time = now.strftime("%H:%M")
-            api.update_status(f"Current occupants {traffic}\n time:{current_time}")
+            api.update_status(f"Weldon current occupants {traffic} \n time:{current_time}")
 
                 
